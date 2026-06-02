@@ -233,7 +233,6 @@ export default function Registration() {
             ) : (
               <>
                 <span>¡REGISTRAR AHORA!</span>
-                <Send className="h-6 w-6" />
               </>
             )}
           </motion.button>
