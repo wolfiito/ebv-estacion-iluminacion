@@ -198,7 +198,7 @@ export default function AdminChildrenList() {
                                                             }}
                                                         />
                                                         <AnimatePresence>
-                                                            {notification?.id === reg.id && notification.type === 'success' && (
+                                                            {notification?.id === reg.id && notification?.type === 'success' && (
                                                                 <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="absolute -left-8">
                                                                     <CheckCircle className="h-5 w-5 text-green-400" />
                                                                 </motion.div>

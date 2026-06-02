@@ -67,8 +67,8 @@ export default function Dashboard() {
         <>
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <StatCard icon={Baby} label="NIÑOS INSCRITOS" value={stats.totalChildren} color="text-neon-cyan" borderColor="border-neon-cyan/20" bgColor="bg-neon-cyan/5" note={`${formatCurrency(EBV_COST_PER_CHILD)} / niño`} pulse/>
-            <StatCard icon={Target} label="META TOTAL NECESARIA" value={formatCurrency(stats.totalNeeded)} color="text-white" borderColor="border-white/20" bgColor="bg-white/5" raw/>
-            <StatCard icon={TrendingUp} label="MONTO RECAUDADO" value={formatCurrency(stats.totalCollected)} color="text-green-400" borderColor="border-green-400/20" bgColor="bg-green-400/5" raw/>
+            <StatCard icon={Target} label="META TOTAL NECESARIA" value={formatCurrency(stats.totalNeeded)} color="text-white" borderColor="border-white/20" bgColor="bg-white/5" />
+            <StatCard icon={TrendingUp} label="MONTO RECAUDADO" value={formatCurrency(stats.totalCollected)} color="text-green-400" borderColor="border-green-400/20" bgColor="bg-green-400/5" />
           </section>
 
           <motion.section variants={itemVariants} className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md shadow-2xl relative overflow-hidden">
@@ -174,8 +174,8 @@ export default function Dashboard() {
   );
 }
 
-interface StatCardProps { icon: React.ElementType; label: string; value: number | string; color: string; borderColor: string; bgColor: string; pulse?: boolean; raw?: boolean; note?: string; }
-function StatCard({ icon: Icon, label, value, color, borderColor, bgColor, pulse, raw, note }: StatCardProps) {
+interface StatCardProps { icon: React.ElementType; label: string; value: number | string; color: string; borderColor: string; bgColor: string; pulse?: boolean; note?: string; }
+function StatCard({ icon: Icon, label, value, color, borderColor, bgColor, pulse, note }: StatCardProps) {
   return (
     <motion.div variants={itemVariants} className={`${bgColor} border ${borderColor} rounded-2xl p-6 flex items-center gap-5 shadow-xl backdrop-blur-sm relative overflow-hidden`}>
       <div className={`p-3 ${bgColor} border ${borderColor} rounded-2xl`}><Icon className={`h-8 w-8 ${color} ${pulse ? 'animate-pulse' : ''} drop-shadow-md`} /></div>
