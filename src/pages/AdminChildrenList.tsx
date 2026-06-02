@@ -13,7 +13,7 @@ const pageVariants = {
 };
 
 // CREDENCIALES ESTÁTICAS DEL EVENTO
-const ADMIN_PASSWORD = '123'; // Cambia esto por tu contraseña real
+const ADMIN_PASSWORD = '35t4c1OnIlum1n4cion'; 
 
 export default function AdminChildrenList() {
   const navigate = useNavigate();

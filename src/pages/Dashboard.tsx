@@ -119,22 +119,7 @@ export default function Dashboard() {
             </div>
           </motion.section>
 
-          <motion.section variants={itemVariants} className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-xl">
-            <div className="flex items-center gap-3 mb-6">
-              <Filter className="h-7 w-7 text-neon-cyan" />
-              <h2 className="font-orbitron text-2xl font-bold text-white tracking-wider">PARÁMETROS DE EXPORTACIÓN (EXCEL)</h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"> 
-              {ageRanges.map((range, index) => (
-                <div key={index} className="bg-black/30 border border-white/10 rounded-xl p-6 text-center shadow-inner relative overflow-hidden">
-                  <div className="absolute top-[-20px] left-[-10px] font-orbitron text-8xl text-white/5 -z-10">{index + 1}</div>
-                  <p className="text-2xl font-bold text-white mb-2">{range.name}</p>
-                  <p className="text-4xl font-bold text-neon-cyan drop-shadow-[0_0_10px_rgba(0,243,255,0.4)]">{range.min} a {range.max}</p>
-                  <p className="text-sm text-gray-400 font-semibold mt-1 tracking-widest">AÑOS</p>
-                </div>
-              ))}
-            </div>
-          </motion.section>
+          
         </>
       )}
 
