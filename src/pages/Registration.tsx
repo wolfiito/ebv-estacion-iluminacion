@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { User, Calendar, Users, Sparkles, Send, AlertTriangle } from 'lucide-react';
+import { User, Calendar, Users, Sparkles, AlertTriangle } from 'lucide-react';
 import { registrationSchema, type RegistrationFormData } from '../lib/validation';
 import { createRegistration } from '../lib/registrationsService'; 
 
