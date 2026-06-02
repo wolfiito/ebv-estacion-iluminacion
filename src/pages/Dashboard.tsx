@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { RotateCw, AlertTriangle, Filter, Baby, Venus, Target, TrendingUp, Building2, Copy, CheckCircle, Info, QrCode, X } from 'lucide-react';
+import { RotateCw, AlertTriangle, Baby, Venus, Target, TrendingUp, Building2, Copy, CheckCircle, Info, QrCode, X } from 'lucide-react';
 import { useRegistrations } from '../hooks/useRegistrations';
 import { EBV_COST_PER_CHILD } from '../lib/constants';
 
@@ -14,7 +14,7 @@ const modalVariants: Variants = {
 };
 
 export default function Dashboard() {
-  const { stats, ageRanges, loading, error } = useRegistrations();
+  const { stats, loading, error } = useRegistrations();
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [showBankModal, setShowBankModal] = useState(false);
 
