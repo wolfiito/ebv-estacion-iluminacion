@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Search, Target, CheckCircle, RotateCw, FileSpreadsheet, AlertTriangle, Lock } from 'lucide-react';
+import { Users, Search, Target, CheckCircle, RotateCw, FileSpreadsheet, AlertTriangle, Lock, X } from 'lucide-react';
 import { useRegistrations } from '../hooks/useRegistrations';
 import { downloadSegmentedExcel } from '../lib/excelService';
-import { updateRegistrationPaidAmount } from '../lib/registrationsService';
+import { updateRegistrationPaidAmount, deleteRegistration } from '../lib/registrationsService';
 import { EBV_COST_PER_CHILD } from '../lib/constants';
 
 const pageVariants = {
@@ -74,6 +74,18 @@ export default function AdminChildrenList() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    //eslint-disable-next-line no-alert
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer.")) return;
+    try {
+      await deleteRegistration(id);
+    } catch (err: any) {
+      console.error(err);
+      //eslint-disable-next-line no-alert
+      alert(err.message || "Error al eliminar el registro.");
+    }
+  };
+
   const filteredRegistrations = registrations.filter(reg => 
     reg.childName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     reg.parentName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -140,15 +152,15 @@ export default function AdminChildrenList() {
                                     <th className="px-5 py-5 w-[30%]">NIÑO (A)</th>
                                     <th className="px-5 py-5 w-[10%]">EDAD</th>
                                     <th className="px-5 py-5 w-[15%]">GÉNERO</th>
-                                    <th className="px-5 py-5 w-[25%]">TUTOR (A)</th>
                                     <th className="px-5 py-5 w-[20%] text-center">MONTO PAGADO ({EBV_COST_PER_CHILD} Costo)</th>
+                                    <th className="px-5 py-5 w-[5%] text-center"></th>
                                 </tr>
                             </thead>
                             <tbody>
                             <AnimatePresence>
                                 {filteredRegistrations.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="text-center py-20 text-gray-500 font-semibold text-lg">
+                                        <td colSpan={6} className="text-center py-20 text-gray-500 font-semibold text-lg">
                                             <Users className="h-12 w-12 mx-auto mb-3 opacity-30" />
                                             No se encontraron registros {searchTerm && `para "${searchTerm}"`}.
                                         </td>
@@ -207,6 +219,15 @@ export default function AdminChildrenList() {
                                                     </div>
                                                 )}
                                             </div>
+                                        </td>
+                                        <td className="px-2 py-5 text-center">
+                                            <button
+                                                onClick={() => handleDelete(reg.id!)}
+                                                className="text-gray-500 hover:text-red-400 p-2 rounded-full transition-colors"
+                                                title="Eliminar registro"
+                                            >
+                                                <X className="h-5 w-5" />
+                                            </button>
                                         </td>
                                     </motion.tr>
                                 ))

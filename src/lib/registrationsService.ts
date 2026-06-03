@@ -1,5 +1,5 @@
 // src/lib/registrationsService.ts
-import { collection, addDoc, serverTimestamp, updateDoc, doc, FirestoreError } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, updateDoc, doc, deleteDoc, FirestoreError } from "firebase/firestore";
 import { db } from "./firebase";
 import { type RegistrationFormData } from "./validation";
 
@@ -72,5 +72,23 @@ export const updateRegistrationPaidAmount = async (id: string, newAmount: number
     }
     
     throw new Error("No se pudo actualizar el monto pagado. Verifica tu conexión e inténtalo de nuevo.");
+  }
+};
+
+/**
+ * Elimina un registro de inscripción de Firestore.
+ * @param id ID del documento del niño.
+ */
+export const deleteRegistration = async (id: string): Promise<void> => {
+  try {
+    const docRef = doc(db, COLLECTION_NAME, id);
+    await deleteDoc(docRef);
+    console.log(`Registro eliminado exitosamente con ID: ${id}`);
+  } catch (error) {
+    console.error("Error al eliminar el registro en Firestore:", error);
+    if (error instanceof Error) {
+        throw new Error(error.message);
+    }
+    throw new Error("No se pudo eliminar el registro. Por favor, inténtalo de nuevo.");
   }
 };
