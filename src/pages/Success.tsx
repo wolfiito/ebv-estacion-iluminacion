@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Download, UserPlus, Sparkles } from 'lucide-react';
+import { Download, UserPlus, Sparkles, Building2, Copy, CheckCircle, Info, Wallet } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 import Confetti from 'react-confetti'; 
 import { type RegistrationFormData } from '../lib/validation';
@@ -14,6 +14,24 @@ export default function Success() {
   const [showConfetti, setShowConfetti] = useState(true);
   const [windowDimension, setWindowDimension] = useState({ width: window.innerWidth, height: window.innerHeight });
   const confettiRef = useRef<HTMLDivElement>(null);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  // Mismos datos bancarios
+  const bankDetails = {
+    bankName: "BANCO DEMO, S.A.",
+    accountNumber: "1234 5678 9012",
+    clabe: "0123 4567 8901 2345 67",
+    beneficiary: "Iglesia Bíblica EBV Iluminación",
+    concept: "EBV OFRENDA [Nombre]"
+  };
+
+  const handleCopy = (text: string, fieldId: string) => {
+    const cleanText = text.replace(/ /g, '');
+    navigator.clipboard.writeText(cleanText).then(() => {
+        setCopiedField(fieldId);
+        setTimeout(() => setCopiedField(null), 2500);
+    });
+  };
 
   // Recuperamos datos (solo para el nombre en el PDF opcionalmente, o seguridad)
   const data = location.state?.registrationData as RegistrationFormData | undefined;
@@ -106,48 +124,77 @@ export default function Success() {
         animate="visible"
         className="w-full max-w-2xl bg-white/10 border border-white/20 p-8 md:p-12 rounded-3xl backdrop-blur-2xl shadow-[0_0_80px_rgba(0,243,255,0.2)] relative z-10 text-center"
       >
-        {/* IMAGEN DE ESTACIÓN ILUMINACIÓN (PROTAGONISTA) */}
+        {/* CHECKMARK DE ÉXITO */}
         <motion.div
           variants={itemVariants}
-          className="mb-8 relative inline-block"
-          // Animación de flotado suave y pulso de brillo
-          animate={{ 
-            y: [0, -10, 0],
-            filter: [
-              'drop-shadow(0 0 10px rgba(255,255,255,0.5))',
-              'drop-shadow(0 0 30px rgba(0,243,255,0.8))',
-              'drop-shadow(0 0 10px rgba(255,255,255,0.5))'
-            ]
-          }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="mb-8 flex justify-center"
         >
-          {/* OJO: Aquí cargamos la imagen desde la carpeta 'public' */}
-          <img 
-            src="/logo_estacion.png" // Ruta relativa a la carpeta public
-            alt="Estación Iluminación"
-            className="max-h-40 md:max-h-52 w-auto mx-auto object-contain"
-            // Manejo de error si la imagen no existe en public/
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              console.error("No se encontró public/logo_estacion.png");
-            }}
-          />
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            className="bg-green-500/20 p-5 rounded-full border border-green-500/50 shadow-[0_0_40px_rgba(34,197,94,0.4)]"
+          >
+             <CheckCircle className="h-16 w-16 md:h-24 md:w-24 text-green-400" />
+          </motion.div>
         </motion.div>
 
-        {/* Frase Inspiradora (Actualizada) */}
+        {/* Título de Éxito */}
         <motion.h1 
           variants={itemVariants}
-          className="font-orbitron text-4xl md:text-5xl font-bold text-white mb-4 tracking-wider leading-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+          className="font-orbitron text-3xl md:text-5xl font-bold text-white mb-10 tracking-widest leading-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] uppercase"
         >
-          ¡TU LUGAR ESTÁ <br/> BRILLANDO!
+          Registro Exitoso
         </motion.h1>
-        
-        <motion.p 
-          variants={itemVariants}
-          className="text-xl md:text-2xl text-neon-cyan font-semibold mb-10 max-w-md mx-auto drop-shadow-md"
-        >
-          Gracias por registrarte. <br/>¡La aventura de luz comienza pronto!
-        </motion.p>
+
+        {/* Sección de Pago */}
+        <motion.div variants={itemVariants} className="bg-black/40 border border-white/10 rounded-2xl p-6 mb-8 text-left space-y-5 shadow-inner w-full">
+          <div className="flex items-center gap-3 mb-2">
+            <Wallet className="h-7 w-7 text-neon-yellow flex-shrink-0" />
+            <p className="font-bold text-lg text-white">MÉTODOS DE PAGO</p>
+          </div>
+          
+          <p className="text-gray-200 text-sm">
+            Si aún no realizas tu pago, puedes hacerlo de las siguientes maneras:
+          </p>
+
+          {/* Transferencia */}
+          <div className="space-y-4 p-4 border border-neon-cyan/20 rounded-xl bg-[#05051a]">
+            <div className="flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-neon-cyan" />
+                <p className="font-bold text-neon-cyan">Transferencia Bancaria</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <DetailItem label="BANCO" value={bankDetails.bankName} />
+                <DetailItem label="BENEFICIARIO" value={bankDetails.beneficiary} />
+            </div>
+            <div className="space-y-3">
+                <CopyableItem label="CLABE INTERBANCARIA" value={bankDetails.clabe} isCopied={copiedField === 'clabe'} onCopy={() => handleCopy(bankDetails.clabe, 'clabe')} />
+                <CopyableItem label="NÚMERO DE CUENTA" value={bankDetails.accountNumber} isCopied={copiedField === 'acc'} onCopy={() => handleCopy(bankDetails.accountNumber, 'acc')} />
+            </div>
+            <div className="mt-2 text-sm text-gray-300">
+                Concepto: <span className="text-neon-cyan font-mono select-all font-bold">{bankDetails.concept}</span>
+            </div>
+          </div>
+
+          {/* Efectivo */}
+          <div className="space-y-2 p-4 border border-neon-yellow/20 rounded-xl bg-[#05051a]">
+            <div className="flex items-center gap-2">
+                <Wallet className="h-5 w-5 text-neon-yellow" />
+                <p className="font-bold text-neon-yellow">Pago en Efectivo</p>
+            </div>
+            <p className="text-sm text-gray-300">
+                Puedes realizar tu pago en efectivo directamente con <span className="font-bold text-white">Yazary</span>.
+            </p>
+          </div>
+
+          <div className="bg-neon-purple/20 border border-neon-purple/40 p-4 rounded-xl flex items-start gap-3 mt-4">
+            <Info className="h-6 w-6 text-neon-purple flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-gray-200">
+                <span className="font-bold text-white">IMPORTANTE:</span> Una vez hecho el pago, envía tu comprobante a Yazary o confirma tu pago en efectivo al número: <span className="font-bold font-mono text-neon-yellow select-all">[PONER EL NÚMERO DE YAZARY AQUÍ]</span>.
+            </p>
+          </div>
+        </motion.div>
 
         <motion.div 
           variants={itemVariants}
@@ -193,4 +240,35 @@ export default function Success() {
 
     </main>
   );
+}
+
+// Componentes auxiliares locales
+interface DetailItemProps { label: string; value: string; }
+function DetailItem({ label, value }: DetailItemProps) { 
+    return ( 
+        <div>
+            <p className="text-xs text-gray-400 font-bold tracking-widest mb-1">{label}</p>
+            <p className="text-sm md:text-base text-white font-semibold">{value}</p>
+        </div> 
+    ); 
+}
+
+interface CopyableItemProps { label: string; value: string; isCopied: boolean; onCopy: () => void; }
+function CopyableItem({ label, value, isCopied, onCopy }: CopyableItemProps) { 
+    return ( 
+        <div>
+            <p className="text-xs text-gray-400 font-bold tracking-widest mb-1">{label}</p>
+            <div className="flex items-center justify-between gap-3 bg-black/40 p-2 pl-4 rounded-xl border border-white/5 shadow-inner">
+                <p className="text-sm md:text-lg font-mono text-white font-bold">{value}</p>
+                <motion.button 
+                    whileHover={{ scale: 1.05 }} 
+                    whileTap={{ scale: 0.95 }} 
+                    onClick={onCopy} 
+                    className={`p-2 rounded-lg transition-colors flex-shrink-0 ${isCopied ? 'bg-green-500/20 text-green-400' : 'bg-neon-yellow/10 text-neon-yellow hover:bg-neon-yellow/20'}`}
+                >
+                    {isCopied ? <CheckCircle className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+                </motion.button>
+            </div>
+        </div> 
+    ); 
 }
