@@ -1,17 +1,17 @@
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { User, Calendar, Users, Sparkles, AlertTriangle } from 'lucide-react';
 import { registrationSchema, type RegistrationFormData } from '../lib/validation';
-import { createRegistration } from '../lib/registrationsService'; 
+import { createRegistration } from '../lib/registrationsService';
 
 export default function Registration() {
   const navigate = useNavigate();
 
   const [dbError, setDbError] = useState<string | null>(null);
-  
+
   const {
     register,
     handleSubmit,
@@ -19,7 +19,7 @@ export default function Registration() {
     watch,
     formState: { errors, isSubmitting }
   } = useForm<RegistrationFormData>({
-    resolver: zodResolver(registrationSchema) as any, 
+    resolver: zodResolver(registrationSchema) as any,
   });
 
   const selectedGender = watch('gender');
@@ -29,9 +29,9 @@ export default function Registration() {
 
     try {
       await createRegistration(data);
-      
+
       navigate('/success', { state: { registrationData: data } });
-      
+
     } catch (error: any) {
       setDbError(error.message || "Ocurrió un error inesperado.");
     }
@@ -39,20 +39,20 @@ export default function Registration() {
 
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8 relative bg-[#0a0a2a]">
-      
+
       {/* CAPA DE EFECTOS VISUALES (z-0) - Se mantiene igual */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <motion.div 
+        <motion.div
           animate={{ rotate: [-15, 5, -15] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[-5%] left-[10%] md:left-[25%] w-[150px] md:w-[300px] h-[80vh] bg-gradient-to-b from-neon-cyan/80 via-neon-cyan/20 to-transparent blur-[40px] origin-top mix-blend-screen"
         />
-        <motion.div 
+        <motion.div
           animate={{ rotate: [15, -5, 15] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[-5%] right-[10%] md:right-[25%] w-[150px] md:w-[300px] h-[80vh] bg-gradient-to-b from-neon-yellow/70 via-neon-yellow/20 to-transparent blur-[40px] origin-top mix-blend-screen"
         />
-        <motion.div 
+        <motion.div
           animate={{ rotate: [-5, 10, -5] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[-5%] left-[50%] -translate-x-1/2 w-[200px] md:w-[400px] h-[90vh] bg-gradient-to-b from-neon-purple/60 via-neon-purple/20 to-transparent blur-[50px] origin-top mix-blend-screen"
@@ -85,7 +85,7 @@ export default function Registration() {
       </div>
 
       {/* CONTENEDOR DEL FORMULARIO (z-10) */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -100,14 +100,11 @@ export default function Registration() {
               ESTACIÓN <br className="md:hidden" />ILUMINACIÓN
             </h1>
           </motion.div>
-          <p className="text-neon-cyan font-inter font-semibold mt-2 text-lg drop-shadow-md">
-           Iluminando quién es realmente JESÚS
-          </p>
         </div>
 
         {/* NUEVO: Mensaje de error general de la Base de Datos */}
         {dbError && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 p-4 bg-red-900/60 border border-red-500 rounded-xl text-red-200 text-sm flex items-start gap-3 shadow-lg"
@@ -131,7 +128,7 @@ export default function Registration() {
               <input
                 {...register('childName')}
                 type="text"
-                placeholder="Ej. Mateo Pérez"
+                placeholder="Ej. Alejandro Flores"
                 className="w-full bg-black/40 border border-white/20 rounded-xl py-3 pl-10 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/50 transition-all shadow-inner"
               />
             </div>
@@ -162,22 +159,20 @@ export default function Registration() {
                 <button
                   type="button"
                   onClick={() => setValue('gender', 'niño', { shouldValidate: true })}
-                  className={`flex-1 rounded-xl border-2 font-bold transition-all ${
-                    selectedGender === 'niño' 
-                    ? 'bg-neon-cyan/40 border-neon-cyan text-white shadow-[0_0_15px_rgba(0,243,255,0.6)]' 
-                    : 'bg-black/40 border-white/20 text-gray-300 hover:border-white/40'
-                  }`}
+                  className={`flex-1 rounded-xl border-2 font-bold transition-all ${selectedGender === 'niño'
+                      ? 'bg-neon-cyan/40 border-neon-cyan text-white shadow-[0_0_15px_rgba(0,243,255,0.6)]'
+                      : 'bg-black/40 border-white/20 text-gray-300 hover:border-white/40'
+                    }`}
                 >
                   Niño
                 </button>
                 <button
                   type="button"
                   onClick={() => setValue('gender', 'niña', { shouldValidate: true })}
-                  className={`flex-1 rounded-xl border-2 font-bold transition-all ${
-                    selectedGender === 'niña' 
-                    ? 'bg-neon-purple/40 border-neon-purple text-white shadow-[0_0_15px_rgba(188,19,254,0.6)]' 
-                    : 'bg-black/40 border-white/20 text-gray-300 hover:border-white/40'
-                  }`}
+                  className={`flex-1 rounded-xl border-2 font-bold transition-all ${selectedGender === 'niña'
+                      ? 'bg-neon-purple/40 border-neon-purple text-white shadow-[0_0_15px_rgba(188,19,254,0.6)]'
+                      : 'bg-black/40 border-white/20 text-gray-300 hover:border-white/40'
+                    }`}
                 >
                   Niña
                 </button>
@@ -208,7 +203,7 @@ export default function Registration() {
             <label className="block text-sm text-white font-semibold mb-1 drop-shadow-md">¿Quién te invitó? (Opcional)</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Sparkles className="h-5 w-5 text-neon-yellow" />
+                <Sparkles className="h-5 w-5 text-neon-cyan" />
               </div>
               <input
                 {...register('invitedBy')}
@@ -232,7 +227,7 @@ export default function Registration() {
               <span className="animate-pulse">GUARDANDO REGISTRO...</span>
             ) : (
               <>
-                <span>¡REGISTRAR AHORA!</span>
+                <span>REGISTRAR</span>
               </>
             )}
           </motion.button>
