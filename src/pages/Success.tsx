@@ -18,12 +18,12 @@ export default function Success() {
 
   // Mismos datos bancarios
   const bankDetails = {
-    bankName: "BANCO DEMO, S.A.",
-    accountNumber: "1234 5678 9012",
-    clabe: "0123 4567 8901 2345 67",
-    beneficiary: "Iglesia Bíblica EBV Iluminación",
-    concept: "EBV OFRENDA [Nombre]"
+    bankName: "Banorte",
+    clabe: "072180010861095244",
+    beneficiary: "Yazary Olvera",
+    concept: "Nombre de su hijo o hija"
   };
+
 
   const handleCopy = (text: string, fieldId: string) => {
     const cleanText = text.replace(/ /g, '');
@@ -133,29 +133,29 @@ export default function Success() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="bg-green-500/20 p-5 rounded-full border border-green-500/50 shadow-[0_0_40px_rgba(34,197,94,0.4)]"
+            className="bg-green-500/20 p-3 rounded-full border border-green-500/50 shadow-[0_0_40px_rgba(34,197,94,0.4)]"
           >
-            <CheckCircle className="h-16 w-16 md:h-24 md:w-24 text-green-400" />
+            <CheckCircle className="h-10 w-10 (y md:h-16 md:w-16 text-green-400" />
           </motion.div>
         </motion.div>
 
         {/* Título de Éxito */}
         <motion.h1
           variants={itemVariants}
-          className="font-orbitron text-3xl md:text-5xl font-bold text-white mb-10 tracking-widest leading-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] uppercase"
+          className="font-orbitron text-xl md:text-4xl font-bold text-white mb-10 tracking-widest leading-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] uppercase"
         >
           Registro Exitoso
         </motion.h1>
 
         {/* Sección de Pago */}
-        <motion.div variants={itemVariants} className="bg-black/40 border border-white/10 rounded-2xl p-6 mb-8 text-left space-y-5 shadow-inner w-full">
+        <motion.div variants={itemVariants} className="bg-black/40 border border-white/10 rounded-2xl p-4 mb-8 text-left space-y-5 shadow-inner w-full">
           <div className="flex items-center gap-3 mb-2">
             <Wallet className="h-7 w-7 text-neon-yellow flex-shrink-0" />
-            <p className="font-bold text-lg text-white">MÉTODOS DE PAGO</p>
+            <p className="font-bold text-lg text-white">DATOS PARA EL PAGO</p>
           </div>
 
           <p className="text-gray-200 text-sm">
-            Si aún no realizas tu pago, puedes hacerlo de las siguientes maneras:
+            Realiza el pago con la siguiente información:
           </p>
 
           {/* Transferencia */}
@@ -169,15 +169,14 @@ export default function Success() {
               <DetailItem label="BENEFICIARIO" value={bankDetails.beneficiary} />
             </div>
             <div className="space-y-3">
-              <CopyableItem label="CLABE INTERBANCARIA" value={bankDetails.clabe} isCopied={copiedField === 'clabe'} onCopy={() => handleCopy(bankDetails.clabe, 'clabe')} />
-              <CopyableItem label="NÚMERO DE CUENTA" value={bankDetails.accountNumber} isCopied={copiedField === 'acc'} onCopy={() => handleCopy(bankDetails.accountNumber, 'acc')} />
+              <CopyableItem label="CLABE" value={bankDetails.clabe} isCopied={copiedField === 'clabe'} onCopy={() => handleCopy(bankDetails.clabe, 'clabe')} />
             </div>
             <div className="mt-2 text-sm text-gray-300">
               Concepto: <span className="text-neon-cyan font-mono select-all font-bold">{bankDetails.concept}</span>
             </div>
           </div>
 
-          {/* Efectivo */}
+          {/* Efectivo
           <div className="space-y-2 p-4 border border-neon-yellow/20 rounded-xl bg-[#05051a]">
             <div className="flex items-center gap-2">
               <Wallet className="h-5 w-5 text-neon-yellow" />
@@ -186,13 +185,13 @@ export default function Success() {
             <p className="text-sm text-gray-300">
               Puedes realizar tu pago en efectivo directamente con <span className="font-bold text-white">Yazary</span>.
             </p>
-          </div>
+          </div> */}
 
           <div className="bg-neon-purple/20 border border-neon-purple/40 p-5 rounded-2xl flex flex-col gap-4 mt-4 shadow-[0_0_20px_rgba(188,19,254,0.15)]">
             <div className="flex items-start gap-3">
               <Info className="h-6 w-6 text-neon-purple flex-shrink-0 mt-0.5" />
               <p className="text-sm text-gray-200 leading-relaxed">
-                <span className="font-bold text-white">¡IMPORTANTE!</span> Una vez realizado el pago, confirma o envía tu comprobante a <span className="font-bold text-neon-purple">Yazary</span> a través de WhatsApp.
+                <span className="font-bold text-white">¡IMPORTANTE!</span>
               </p>
             </div>
             <motion.a
@@ -222,10 +221,9 @@ export default function Success() {
 
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
 
-          {/* BOTÓN DESCARGAR PDF ESTÁTICO (Ruta a public/) */}
           <motion.a
-            href="/hoja_inscripcion_ebv.pdf" // Ruta al archivo en la carpeta public
-            download="Mi_Inscripcion_EBV.pdf" // Nombre con el que se descargará
+            href="/hoja_inscripcion_ebv.pdf"
+            download="Mi_Inscripcion_EBV.pdf"
             whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(248, 255, 0, 0.6)" }}
             whileTap={{ scale: 0.98 }}
             className="flex-1 bg-neon-yellow text-black font-orbitron font-bold text-lg py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all"
