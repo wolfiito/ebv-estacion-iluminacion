@@ -24,11 +24,10 @@ export default function Dashboard() {
   const formatCurrency = (amount: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
 
   const bankDetails = {
-    bankName: "BANCO DEMO, S.A.",
-    accountNumber: "1234 5678 9012",
-    clabe: "0123 4567 8901 2345 67",
-    beneficiary: "Iglesia Bíblica EBV Iluminación",
-    concept: "EBV OFRENDA"
+    bankName: "Banorte",
+    clabe: "072180010861095244",
+    beneficiary: "Yazary Olvera",
+    concept: "Ofrenda EBV"
   };
 
   const qrUrl = useMemo(() => {
@@ -134,16 +133,15 @@ export default function Dashboard() {
                 <div className="flex items-center gap-4">
                   <Building2 className="h-10 w-10 text-neon-yellow drop-shadow-[0_0_10px_rgba(248,255,0,0.6)]" />
                   <div>
-                    <h2 className="font-orbitron text-2xl font-bold text-white tracking-wider">DATOS DE OFRENDA / DONACIÓN</h2>
-                    <p className="text-neon-yellow font-semibold mt-1">Cubriendo el costo de los niños</p>
+                    <h2 className="font-orbitron text-2xl font-bold text-white tracking-wider">DATOS  PARA OFRENDAR</h2>
+
                   </div>
                 </div>
 
                 <div className="space-y-4 pt-4 border-t border-neon-yellow/10">
                     <DetailItem label="BANCO" value={bankDetails.bankName} />
                     <DetailItem label="BENEFICIARIO" value={bankDetails.beneficiary} />
-                    <CopyableItem label="CLABE INTERBANCARIA" value={bankDetails.clabe} isCopied={copiedField === 'clabe'} onCopy={() => handleCopy(bankDetails.clabe, 'clabe')} />
-                    <CopyableItem label="NÚMERO DE CUENTA" value={bankDetails.accountNumber} isCopied={copiedField === 'acc'} onCopy={() => handleCopy(bankDetails.accountNumber, 'acc')} />
+                    <CopyableItem label="CLABE" value={bankDetails.clabe} isCopied={copiedField === 'clabe'} onCopy={() => handleCopy(bankDetails.clabe, 'clabe')} />
                 </div>
                 
                 <div className="mt-6 bg-black/40 border border-white/10 rounded-2xl p-5 text-center shadow-inner">
