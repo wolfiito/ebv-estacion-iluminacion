@@ -25,3 +25,15 @@ export interface DashboardParams {
     max: number;
   }[];
 }
+
+export interface Offering {
+  id?: string;
+  name: string;
+  amount: number;
+  createdAt: Date;
+}
+
+export interface OfferingStats {
+  totalOfferingsCollected: number;
+  equivalentChildren: number;
+}

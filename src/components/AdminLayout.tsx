@@ -1,11 +1,12 @@
 import { Outlet, NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, CheckCircle } from 'lucide-react';
+import { LayoutDashboard, Users, CheckCircle, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AdminLayout() {
   const navLinks = [
     { to: "/admin", icon: LayoutDashboard, label: "Métricas Visuales", end: true },
     { to: "/admin/children", icon: Users, label: "Gestión de Niños" },
+    { to: "/admin/offerings", icon: Heart, label: "Ofrendas" },
   ];
 
   return (

@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { RotateCw, AlertTriangle, Baby, Venus, Target, TrendingUp, Building2, Copy, CheckCircle, Info, QrCode, X } from 'lucide-react';
+import { RotateCw, AlertTriangle, Baby, Venus, Target, TrendingUp, Building2, Copy, CheckCircle, Info, QrCode, X, Heart } from 'lucide-react';
 import { useRegistrations } from '../hooks/useRegistrations';
+import { useOfferings } from '../hooks/useOfferings';
 import { EBV_COST_PER_CHILD } from '../lib/constants';
 
 const containerVariants: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.1 } } };
@@ -15,6 +16,7 @@ const modalVariants: Variants = {
 
 export default function Dashboard() {
   const { stats, loading, error } = useRegistrations();
+  const { stats: offeringStats } = useOfferings();
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [showBankModal, setShowBankModal] = useState(false);
 
@@ -64,10 +66,11 @@ export default function Dashboard() {
 
       {!loading && !error && (
         <>
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <StatCard icon={Baby} label="NIÑOS INSCRITOS" value={stats.totalChildren} color="text-neon-cyan" borderColor="border-neon-cyan/20" bgColor="bg-neon-cyan/5" note={`${formatCurrency(EBV_COST_PER_CHILD)} / niño`} pulse/>
             <StatCard icon={Target} label="META TOTAL NECESARIA" value={formatCurrency(stats.totalNeeded)} color="text-white" borderColor="border-white/20" bgColor="bg-white/5" />
             <StatCard icon={TrendingUp} label="MONTO RECAUDADO" value={formatCurrency(stats.totalCollected)} color="text-green-400" borderColor="border-green-400/20" bgColor="bg-green-400/5" />
+            <StatCard icon={Heart} label="EQUIV. EN NIÑOS" value={`${offeringStats?.equivalentChildren || 0} ${offeringStats?.equivalentChildren === 1 ? 'niño' : 'niños'}`} color="text-neon-purple" borderColor="border-neon-purple/20" bgColor="bg-neon-purple/5" note={`Por ofrendas: ${formatCurrency(offeringStats?.totalOfferingsCollected || 0)}`} />
           </section>
 
           <motion.section variants={itemVariants} className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md shadow-2xl relative overflow-hidden">

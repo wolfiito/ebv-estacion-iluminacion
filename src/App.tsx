@@ -5,6 +5,7 @@ import Success from './pages/Success';
 import AdminLayout from './components/AdminLayout'; // NUEVO Layout
 import Dashboard from './pages/Dashboard'; // Actualizado para métricas
 import AdminChildrenList from './pages/AdminChildrenList'; // NUEVA página
+import AdminOfferings from './pages/AdminOfferings'; // NUEVA página
 import Donate from './pages/Donate';
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
           <Route index element={<Dashboard />} />
           {/* Lista y Gestión monetaria */}
           <Route path="children" element={<AdminChildrenList />} />
+          <Route path="offerings" element={<AdminOfferings />} />
         </Route>
       </Routes>
     </BrowserRouter>

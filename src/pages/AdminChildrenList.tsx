@@ -32,13 +32,13 @@ export default function AdminChildrenList() {
 
     const timer = setTimeout(() => {
       //eslint-disable-next-line no-alert
-      const pass = window.prompt(`🔐 ACCESO RESTRINGIDO\n\nEdición de pagos y lista de niños.\nIntroduce la clave:`);
+      const pass = window.prompt(`ACCESO RESTRINGIDO\n\nEdición de pagos y lista de niños.\nIntroduce la clave:`);
 
       if (pass === ADMIN_PASSWORD) {
         setIsAuthenticated(true);
       } else {
         //eslint-disable-next-line no-alert
-        window.alert(`⚠️ Clave incorrecta. Regresando al panel visual.`);
+        window.alert(`Clave incorrecta. Regresando al panel visual.`);
         navigate('/admin'); // Lo regresa al dashboard público
       }
     }, 300);
