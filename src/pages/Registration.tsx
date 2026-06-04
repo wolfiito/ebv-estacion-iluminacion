@@ -91,14 +91,73 @@ export default function Registration() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-xl bg-white/10 border border-white/20 p-6 md:p-10 rounded-3xl backdrop-blur-md shadow-[0_0_50px_rgba(0,243,255,0.15)] relative z-10"
       >
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 relative flex flex-col items-center justify-center min-h-[300px] overflow-visible">
+          {/* Fondo estático de ráfaga */}
+          <motion.img 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            src="https://vbs.lifeway.com/wp-content/uploads/2025/03/Layered-full-and-partial-burst-new.png"
+            className="absolute z-0 w-[120%] max-w-none md:w-[150%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-cover opacity-90"
+            style={{ pointerEvents: 'none' }}
+            alt="Fondo Estación"
+          />
+          
+          {/* Ráfaga 2 Animada (Pequeña rotación) */}
+          <motion.img 
+             initial={{ opacity: 0, scale: 0.8 }}
+             animate={{ opacity: 1, scale: [1, 1.05, 1], rotate: [0, -2, 0, 2, 0] }}
+             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+             src="https://vbs.lifeway.com/wp-content/uploads/2025/03/Layered-full-and-partial-burst-3.png"
+             className="absolute z-0 w-[90%] md:w-[110%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mix-blend-screen opacity-70"
+             style={{ pointerEvents: 'none' }}
+             alt="Resplandor"
+          />
+
+          {/* Logo Principal 3D */}
           <motion.div
-            animate={{ textShadow: ["0 0 10px #f8ff00", "0 0 30px #f8ff00", "0 0 10px #f8ff00"] }}
-            transition={{ duration: 2.5, repeat: Infinity }}
+             initial={{ opacity: 0, y: -30, rotateX: 30 }}
+             animate={{ opacity: 1, y: 0, rotateX: [-5, 5, -5] }}
+             transition={{ 
+               y: { type: "spring", stiffness: 100, delay: 0.2 }, 
+               rotateX: { duration: 6, repeat: Infinity, ease: "easeInOut" } 
+             }}
+             className="relative z-10 w-[90%] max-w-[320px] md:max-w-[400px] mt-4"
           >
-            <h1 className="font-orbitron text-4xl md:text-5xl font-bold text-white mb-2 tracking-wider">
-              ESTACIÓN <br className="md:hidden" />ILUMINACIÓN
-            </h1>
+             <motion.img 
+               animate={{ y: [-5, 5, -5] }}
+               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+               src="https://vbs.lifeway.com/wp-content/uploads/2025/08/EstacionIluminacion-Layered-full-and-partial-burst-4.png"
+               className="w-full drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)]"
+               alt="Estación Iluminación"
+             />
+          </motion.div>
+          
+          {/* Letras Animadas */}
+          <motion.div
+             initial="hidden"
+             animate="visible"
+             variants={{
+               hidden: { opacity: 0 },
+               visible: {
+                 opacity: 1,
+                 transition: { staggerChildren: 0.05, delayChildren: 0.8 }
+               }
+             }}
+             className="text-white font-bold text-sm md:text-lg tracking-wider uppercase mt-8 relative z-10 px-2 text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+          >
+             {"Descubriendo la grandeza de Dios en las cosas más pequeñas".split(" ").map((word, i) => (
+                <motion.span 
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 200 } }
+                  }}
+                  className="inline-block mr-[0.25em]"
+                >
+                  {word}
+                </motion.span>
+             ))}
           </motion.div>
         </div>
 
@@ -117,7 +176,7 @@ export default function Registration() {
           </motion.div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-20">
           {/* Nombre del Niño - Se mantiene igual */}
           <div>
             <label className="block text-sm text-white font-semibold mb-1 drop-shadow-md">Nombre del niño *</label>
